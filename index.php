@@ -1,26 +1,15 @@
 <?php
-include_once('Config/database.php');
+require_once('Controllers/games.php');
 
-$query = "SELECT * FROM games"; // SQL statement
-$statement = $db->prepare($query); // encapsulate the sql statement
-$statement->execute(); // run on the db server
-$games = $statement->fetchAll(); // returns an array
-$statement->closeCursor(); // close the connection
+$games = ReadGames();
+
+$title = "Home";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>COMP1006</title>
-    <!-- CSS Section -->
-    <link rel="stylesheet" href="./Scripts/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./Scripts/lib/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="./Scripts/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="./Content/app.css">
-</head>
-<body>
+<?php include_once('Views/partials/header.php'); ?>
+
+<?php include_once ('Views/partials/navbar.php'); ?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
@@ -55,10 +44,4 @@ $statement->closeCursor(); // close the connection
     </div>
 </div>
 
-
-<!-- JavaScript Section -->
-<script src="./Scripts/lib/jquery/dist/jquery.min.js"></script>
-<script src="./Scripts/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="./Scripts/app.js"></script>
-</body>
-</html>
+<?php include_once ('Views/partials/footer.php');

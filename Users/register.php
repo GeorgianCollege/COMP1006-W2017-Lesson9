@@ -1,4 +1,7 @@
 <?php
+
+include_once('../Models/User.php');
+
 if(isset($_POST["username"])){
     include_once('../Config/database.php');
 
@@ -6,8 +9,10 @@ if(isset($_POST["username"])){
     // TODO: check for unique username
 
     try {
+        $db = DBConnection();
         $password = $_POST["password"];
         $displayName = $_POST["displayName"];
+
         $query = "INSERT INTO users (username, password, displayName) VALUES (:username, :password, :displayName)";
         $statement = $db->prepare($query);
         $statement->bindValue(':username', $username);
@@ -27,22 +32,13 @@ else {
     $messages = "";
 }
 
+$title = "Register";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register</title>
-    <!-- CSS Section -->
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="../Content/app.css">
-</head>
-<body>
+<?php include_once('../Views/partials/header.php'); ?>
+
+<?php include_once('../Views/partials/navbar.php'); ?>
 
 <!-- Render the Registration form  -->
 	<main class="container">
@@ -78,9 +74,4 @@ else {
         </div>
 	</main>
 
-<!-- JavaScript Section -->
-<script src="../Scripts/lib/jquery/dist/jquery.min.js"></script>
-<script src="../Scripts/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../Scripts/app.js"></script>
-</body>
-</html>
+<?php include_once('../Views/partials/footer.php'); ?>

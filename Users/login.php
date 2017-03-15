@@ -3,6 +3,7 @@
 if(isset($_POST["username"])){
     include_once('../Config/database.php');
     try{
+        $db = DBConnection();
         $username = $_POST["username"];
         $password = $_POST["password"];
         $query = "SELECT id FROM users 
@@ -22,34 +23,21 @@ if(isset($_POST["username"])){
             $statement->closeCursor(); // close the connection
             $messages = "Invalid Username or Password";
         }
-
-
-
     }
     catch(Exception $e) {
         $messages = $e->getMessage();
     }
-
 }
 else {
     $messages = "";
 }
 
-
+$title = "Login";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
-    <!-- CSS Section -->
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="../Content/app.css">
-</head>
-<body>
+
+<?php include_once('../Views/partials/header.php'); ?>
+
+<?php include_once('../Views/partials/navbar.php'); ?>
 
 <main class="container">
     <?php if ($messages != "") : ?>
@@ -70,7 +58,7 @@ else {
                 </fieldset>
                 <fieldset class="form-group text-right">
                     <input type="submit" class="btn btn-success" value="Log In"/>
-                    <a href="/">
+                    <a href=<?php echo $localRoot ?>>
                         <input type="button" class="btn btn-warning" value="Cancel"/>
                     </a>
                </fieldset>
@@ -79,9 +67,4 @@ else {
       </div>
     </main>
 
-<!-- JavaScript Section -->
-<script src="../Scripts/lib/jquery/dist/jquery.min.js"></script>
-<script src="../Scripts/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../Scripts/app.js"></script>
-</body>
-</html>
+<?php include_once('../Views/partials/footer.php'); ?>

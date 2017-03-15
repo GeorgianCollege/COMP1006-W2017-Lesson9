@@ -1,6 +1,7 @@
 <?php
 include_once('../Users/is_authenticated.php');
-include_once('../Config/database.php'); // include the database connection file
+//include_once('../Config/database.php'); // include the database connection file
+include_once('../Controllers/games.php');
 
 $gameID = $_GET["gameID"]; // assigns the gameID from the URL
 
@@ -9,27 +10,16 @@ if($gameID == 0) {
     $isAddition = 1;
 } else {
     $isAddition = 0;
-$query = "SELECT * FROM games WHERE Id = :game_id "; // SQL statement
-$statement = $db->prepare($query); // encapsulate the sql statement
-$statement->bindValue(':game_id', $gameID);
-$statement->execute(); // run on the db server
-$game = $statement->fetch(); // returns only one record
-$statement->closeCursor(); // close the connection
+    $game = GetGameById($gameID);
 }
+
+$title = "Game Details";
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Details</title>
-    <!-- CSS Section -->
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/bootstrap/dist/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../Scripts/lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="../Content/app.css">
-</head>
-<body>
+
+<?php include_once('../Views/partials/header.php'); ?>
+
+<?php include_once('../Views/partials/navbar.php'); ?>
 
 <div class="container">
     <div class="row">
@@ -53,6 +43,10 @@ $statement->closeCursor(); // close the connection
                 </div>
                     <input type="hidden" name="isAddition" value="<?php echo $isAddition; ?>">
                 <button type="submit" id="SubmitButton" class="btn btn-primary">Submit</button>
+                <a href=<?php echo $localRoot ?>>
+                    <input type="button" class="btn btn-warning" value="Cancel"/>
+                </a>
+
             </form>
 
         </div>
@@ -60,10 +54,5 @@ $statement->closeCursor(); // close the connection
 </div>
 
 
-<!-- JavaScript Section -->
-<script src="../Scripts/lib/jquery/dist/jquery.min.js"></script>
-<script src="../Scripts/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../Scripts/app.js"></script>
-</body>
-</html>
+<?php include_once('../Views/partials/footer.php'); ?>
 
